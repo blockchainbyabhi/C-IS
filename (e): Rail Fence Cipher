@@ -1,0 +1,24 @@
+import java.util.*;
+
+public class P1e_RailFence {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the plain text:");
+        String str = sc.nextLine();
+        String output = "";
+        int len = str.length();
+        System.out.println("\nInput String:" + str);
+
+        for (int i = 0; i < len; i += 2) output += str.charAt(i);
+        for (int i = 1; i < len; i += 2) output += str.charAt(i);
+        System.out.println("Cipher Text:" + output);
+
+        int half = (len + 1) / 2;
+        String r1 = output.substring(0, half), r2 = output.substring(half);
+        String plain = "";
+        for (int i = 0; i < len; i++)
+            plain += (i % 2 == 0) ? r1.charAt(i / 2) : r2.charAt(i / 2);
+        System.out.println("Decrypted Text:" + plain);
+        sc.close();
+    }
+}
