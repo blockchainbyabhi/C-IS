@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class P1a_CaesarCipher {
+    public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+
+    public static String encrypt(String plainText, int shiftKey) {
+        plainText = plainText.toLowerCase();
+        String cipherText = "";
+        for (int i = 0; i < plainText.length(); i++) {
+            int pos = ALPHABET.indexOf(plainText.charAt(i));
+            if (pos == -1) { cipherText += plainText.charAt(i); continue; }
+            int keyVal = (shiftKey + pos) % 26;
+            cipherText += ALPHABET.charAt(keyVal);
+        }
+        return cipherText;
+    }
+
+    public static String decrypt(String cipherText, int shiftKey) {
+        cipherText = cipherText.toLowerCase();
+        String plainText = "";
+        for (int i = 0; i < cipherText.length(); i++) {
+            int pos = ALPHABET.indexOf(cipherText.charAt(i));
+            if (pos == -1) { plainText += cipherText.charAt(i); continue; }
+            int keyVal = (pos - shiftKey) % 26;
+            if (keyVal < 0) keyVal = ALPHABET.length() + keyVal;
+            plainText += ALPHABET.charAt(keyVal);
+        }
+        return plainText;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the String for Encryption:");
+        String message = sc.next();
+        System.out.println(encrypt(message, 3));
+        System.out.println(decrypt(encrypt(message, 3), 3));
+        sc.close();
+    }
+}
