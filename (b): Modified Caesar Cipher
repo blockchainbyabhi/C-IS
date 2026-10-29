@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class P1b_ModifiedCaesarCipher {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Type your Plain Text:");
+        String plainText = input.nextLine();
+        System.out.println("Type your Shiftkey Length:");
+        int shiftKey = input.nextInt();
+        String cipherText = CaesarCipher.encrypt(plainText, shiftKey);
+        System.out.println("Your Plain Text: " + plainText);
+        System.out.println("Your Cipher Text: " + cipherText);
+        String decryptedText = CaesarCipher.decrypt(cipherText, shiftKey);
+        System.out.println("Your Decrypted Plain Text: " + decryptedText);
+        input.close();
+    }
+}
+
+class CaesarCipher {
+    public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+
+    public static String encrypt(String plainText, int shiftKey) {
+        plainText = plainText.toLowerCase();
+        String cipherText = "";
+        for (int i = 0; i < plainText.length(); i++) {
+            int pos = ALPHABET.indexOf(plainText.charAt(i));
+            if (pos == -1) {
+                cipherText += plainText.charAt(i);
+            } else {
+                int keyVal = (shiftKey + pos) % 26;
+                cipherText += ALPHABET.charAt(keyVal);
+            }
+        }
+        return cipherText;
+    }
+
+    public static String decrypt(String cipherText, int shiftKey) {
+        cipherText = cipherText.toLowerCase();
+        String plainText = "";
+        for (int i = 0; i < cipherText.length(); i++) {
+            int pos = ALPHABET.indexOf(cipherText.charAt(i));
+            if (pos == -1) {
+                plainText += cipherText.charAt(i);
+            } else {
+                int keyVal = (pos - shiftKey) % 26;
+                if (keyVal < 0) keyVal = ALPHABET.length() + keyVal;
+                plainText += ALPHABET.charAt(keyVal);
+            }
+        }
+        return plainText;
+    }
+}
