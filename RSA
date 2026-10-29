@@ -1,0 +1,49 @@
+import java.util.*;
+import java.math.*;
+
+public class P2_RSA {
+    public static void main(String[] args) {
+        BigInteger p, q, E, D = BigInteger.ONE, n, P, Q;
+        Scanner s = new Scanner(System.in);
+
+        System.out.println("Enter A's prime number!");
+        p = s.nextBigInteger();
+        System.out.println("Enter B's prime number!");
+        q = s.nextBigInteger();
+
+        n = p.multiply(q);
+        P = p.subtract(BigInteger.ONE);
+        Q = q.subtract(BigInteger.ONE);
+
+        int x = 0;
+        do {
+            System.out.println("Enter Public key");
+            E = s.nextBigInteger();
+            if (P.gcd(E).equals(BigInteger.ONE) && Q.gcd(E).equals(BigInteger.ONE)) x++;
+        } while (x == 0);
+
+        for (int i = 1; ; i++) {
+            D = new BigInteger(String.valueOf(i));
+            if (D.multiply(E).mod(P.multiply(Q)).equals(BigInteger.ONE)) break;
+        }
+
+        s.nextLine();
+        System.out.println("Enter Plain text!");
+        String text = s.nextLine();
+        String in = "", out = "", nums = "";
+
+        for (int i = 0; i < text.length(); i++) {
+            BigInteger T = new BigInteger(String.valueOf((int) text.charAt(i)));
+            BigInteger O = T.modPow(E, n);
+            out += (char) O.intValue();
+            nums += O + " ";
+            BigInteger TF = O.modPow(D, n);
+            in += (char) TF.intValue();
+        }
+        System.out.println("n = " + n + ", e = " + E + ", d = " + D);
+        System.out.println("Encrypted text:" + out);
+        System.out.println("Encrypted values:" + nums.trim());
+        System.out.println("Decrypted text:" + in);
+        s.close();
+    }
+}
