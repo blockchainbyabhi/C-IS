@@ -1,0 +1,29 @@
+import java.util.*;
+
+public class P1d_PolyAlphabet {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String l = "abcdefghijklmnopqrstuvwxyz";
+
+        System.out.print("Give the Plain Text:");
+        String p = sc.nextLine().toLowerCase();
+        System.out.print("Give the Key:");
+        String key = sc.nextLine().toLowerCase();
+
+        int pln = p.length(), ky = key.length();
+
+        String k = "";
+        for (int i = 0; i < pln; i++) k += key.charAt(i % ky);
+
+        String c = "";
+        for (int j = 0; j < pln; j++)
+            c += l.charAt((l.indexOf(k.charAt(j)) + l.indexOf(p.charAt(j))) % 26);
+        System.out.println("Cipher Text: " + c.toUpperCase());
+
+        String pl = "";
+        for (int r = 0; r < pln; r++)
+            pl += l.charAt(((l.indexOf(c.charAt(r)) - l.indexOf(k.charAt(r))) + 26) % 26);
+        System.out.println("DeCipherText: " + pl);
+        sc.close();
+    }
+}
