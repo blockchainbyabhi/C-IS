@@ -1,0 +1,31 @@
+import java.util.*;
+
+public class P1c_MonoAlphabetic {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String plainText  = "abcdefghijklmnopqrstuvwxyz";
+        String cipherText = "QWERTYUIOPASDFGHJKLZXCVBNM";
+
+        System.out.println("\nPlainText: " + plainText);
+        System.out.println("\nCipherText: " + cipherText);
+        System.out.println("\nUsing MonoAlphabetic:");
+        System.out.print("\nEnter Data to Send: ");
+        String input = sc.nextLine().toLowerCase();
+
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            char ch = input.charAt(i);
+            int pos = plainText.indexOf(ch);
+            output += (pos != -1) ? cipherText.charAt(pos) : ch;
+        }
+        System.out.println("\nEncrypted Output: " + output);
+
+        String back = "";
+        for (int i = 0; i < output.length(); i++) {
+            int pos = cipherText.indexOf(output.charAt(i));
+            back += (pos != -1) ? plainText.charAt(pos) : output.charAt(i);
+        }
+        System.out.println("Decrypted Output: " + back);
+        sc.close();
+    }
+}
