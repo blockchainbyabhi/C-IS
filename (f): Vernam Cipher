@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class P1f_Vernam {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the PL Text:");
+        String text = input.nextLine();
+        int k = text.length();
+        char[] arText = text.toCharArray();
+
+        System.out.print("\n-----------Note -----------");
+        System.out.print("\nKey (cipher) length must be equal to plain text length");
+        System.out.print("\nEnter The Vernam Cipher:");
+        String cipher = input.nextLine();
+
+        if (cipher.length() == text.length()) {
+            char[] arCipher = cipher.toCharArray();
+            char[] encoded = new char[k];
+
+            System.out.print("\nYour PL is :" + text + "\nAfter Encoded (hex)=");
+            for (int i = 0; i < arText.length; i++) {
+                encoded[i] = (char) (arText[i] ^ arCipher[i]);
+                System.out.printf("%02x ", (int) encoded[i]);
+            }
+            System.out.print("\nAfter Decoded=");
+            for (int i = 0; i < encoded.length; i++) {
+                char temp = (char) (encoded[i] ^ arCipher[i]);
+                System.out.print(temp);
+            }
+            System.out.println();
+        } else {
+            System.out.print("\n---------INVALID Cipher ---- \nPlease Check");
+        }
+        input.close();
+    }
+}
